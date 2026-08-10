@@ -4,6 +4,6 @@
   "type": "module",
   "scripts": {
     "start": "node --env-file=.env server.mjs",
-    "check": "node --check server.mjs"
+    "check": "node --check server.mjs && node --check server.ts"
   }
 }

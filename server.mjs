@@ -571,6 +571,6 @@ export const server = createServer(async (request, response) => {
   }
 });
 
-server.listen(PORT, '127.0.0.1', () => {
+server.listen(PORT, '0.0.0.0', () => {
   console.log(`Brainroot đang chạy tại http://127.0.0.1:${PORT}`);
 });

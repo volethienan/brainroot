@@ -15,3 +15,9 @@ Khi bắt đầu phần **Nói**, trình duyệt sẽ xin quyền micro và ghi 
 5. Mở `http://127.0.0.1:3000`.
 
 Không mở trực tiếp `web_brainroot.html` nếu muốn dùng tính năng tạo chủ đề bằng Gemini. Khóa API chỉ được đọc bởi `server.mjs` và không được gửi xuống trình duyệt.
+
+## Deploy lên Vercel
+
+Vercel tự nhận `server.ts` ở thư mục gốc làm Node server entry. File này nạp server hiện có từ `server.mjs`, nên không cần đặt Build Command hoặc Output Directory.
+
+Trong Vercel Project Settings, thêm các biến môi trường tương ứng với `.env.example`, tối thiểu là `GEMINI_API_KEY`, rồi deploy lại project.
