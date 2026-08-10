@@ -8,11 +8,10 @@ Khi bắt đầu phần **Nói**, trình duyệt sẽ xin quyền micro và ghi 
 
 ## Chạy ứng dụng
 
-1. Thu hồi khóa Gemini đã từng gửi hoặc dán công khai và tạo khóa mới.
-2. Sao chép `.env.example` thành `.env`.
-3. Điền khóa mới vào `GEMINI_API_KEY` trong `.env`.
-4. Chạy `npm start`.
-5. Mở `http://127.0.0.1:3000`.
+1. Mở file `.env` đã có trong project.
+2. Điền cấu hình Gemini cần dùng.
+3. Chạy `npm start`.
+4. Mở `http://127.0.0.1:3000`.
 
 Không mở trực tiếp `web_brainroot.html` nếu muốn dùng tính năng tạo chủ đề bằng Gemini. Khóa API chỉ được đọc bởi `server.mjs` và không được gửi xuống trình duyệt.
 
@@ -20,4 +19,4 @@ Không mở trực tiếp `web_brainroot.html` nếu muốn dùng tính năng t�
 
 Vercel tự nhận `server.ts` ở thư mục gốc làm Node server entry. File này nạp server hiện có từ `server.mjs`, nên không cần đặt Build Command hoặc Output Directory.
 
-Trong Vercel Project Settings, thêm các biến môi trường tương ứng với `.env.example`, tối thiểu là `GEMINI_API_KEY`, rồi deploy lại project.
+Project hiện track file `.env` trong Git theo chủ đích của chủ project. Nếu sử dụng Vercel Environment Variables thay cho file này, tối thiểu cần cấu hình `GEMINI_API_KEY` rồi deploy lại project.
