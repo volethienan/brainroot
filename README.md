@@ -4,7 +4,7 @@
 
 Sau khi quay, nút 💡 **Gợi ý** dùng Gemini để cung cấp định nghĩa ngắn, từ khóa nghiên cứu và ba câu hỏi phản biện cho chủ đề hiện tại. Kết quả được cache trong phiên để không gọi lại API khi mở cùng một chủ đề.
 
-Khi bắt đầu phần **Nói**, trình duyệt sẽ xin quyền micro và ghi âm trong thời gian hẹn giờ. Hết giờ, bản ghi được gửi trực tiếp tới Gemini để chấm độ rõ ràng, cấu trúc, lập luận và cách truyền đạt; ứng dụng không lưu audio thành file trên server. Phần nhận xét đóng vai reviewer khó tính: dựng lại chuỗi lập luận, chỉ ra lỗi logic và thông tin cần kiểm chứng, đặt câu hỏi phản biện rồi viết lại lập luận chặt chẽ hơn. Nếu đóng màn hình trước khi hết giờ, bản ghi bị hủy và không được gửi phân tích.
+Khi bắt đầu phần **Nói**, trình duyệt sẽ xin quyền micro và ghi âm trong thời gian hẹn giờ. Hết giờ, bản ghi được gửi trực tiếp tới Gemini để đánh giá độ rõ ràng, cấu trúc, lập luận và cách truyền đạt theo thang 1–5 có mô tả; ứng dụng không lưu audio thành file trên server. Điểm tổng 100 chỉ là chỉ báo tham khảo được tính từ bốn tiêu chí. Phản hồi nêu chất lượng audio và độ tin cậy, ưu tiên một hoặc hai điểm cần luyện, chỉ gắn vấn đề lập luận khi có bằng chứng rõ và coi thông tin chưa chắc là mệnh đề cần kiểm chứng thay vì kết luận sai. Nếu đóng màn hình trước khi hết giờ, bản ghi bị hủy và không được gửi phân tích.
 
 ## Chạy ứng dụng
 

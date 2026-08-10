@@ -477,7 +477,11 @@
   .feedback-score{width:78px;height:78px;border-radius:50%;flex:0 0 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;border:3px solid var(--accent);color:var(--accent);}
   .feedback-score strong{font-family:'Fraunces',serif;font-size:30px;line-height:1;}
   .feedback-score span{font-size:10px;margin-top:4px;color:var(--ink-dim);}
+  .feedback-copy{min-width:0;flex:1;}
   .feedback-summary{font-size:13.5px;line-height:1.65;color:var(--ink);margin:0;}
+  .feedback-meta{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px;}
+  .feedback-chip{padding:4px 8px;border-radius:999px;background:rgba(127,211,224,0.08);border:1px solid rgba(127,211,224,0.18);color:var(--cyan);font-size:10.5px;font-weight:700;}
+  .feedback-chip.low{background:rgba(226,104,90,0.08);border-color:rgba(226,104,90,0.2);color:var(--coral);}
   .score-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:14px;}
   .score-item{background:var(--panel-2);border:1px solid var(--line-soft);border-radius:12px;padding:11px 12px;display:flex;justify-content:space-between;gap:10px;font-size:12.5px;color:var(--ink-dim);}
   .score-item strong{color:var(--cyan);font-size:14px;}
@@ -1442,83 +1446,110 @@ function renderSpeechFeedback(feedback){
   const scoreValue = document.createElement('strong');
   scoreValue.textContent = String(feedback.overallScore ?? 0);
   const scoreUnit = document.createElement('span');
-  scoreUnit.textContent = '/ 100';
+  scoreUnit.textContent = '/ 100 tham khảo';
   score.append(scoreValue, scoreUnit);
+  const feedbackCopy = document.createElement('div');
+  feedbackCopy.className = 'feedback-copy';
   const summary = document.createElement('p');
   summary.className = 'feedback-summary';
   summary.textContent = feedback.summary || 'Gemini chưa nhận xét được bài nói này.';
-  hero.append(score, summary);
+  const meta = document.createElement('div');
+  meta.className = 'feedback-meta';
+  const confidenceLabels = {high:'cao', medium:'vừa', low:'thấp'};
+  const qualityLabels = {clear:'rõ', usable:'đủ dùng', poor:'kém'};
+  const confidence = document.createElement('span');
+  confidence.className = `feedback-chip${feedback.assessmentConfidence === 'low' ? ' low' : ''}`;
+  confidence.textContent = `Độ tin cậy: ${confidenceLabels[feedback.assessmentConfidence] || 'chưa rõ'}`;
+  const audioQuality = document.createElement('span');
+  audioQuality.className = `feedback-chip${feedback.audioQuality === 'poor' ? ' low' : ''}`;
+  audioQuality.textContent = `Âm thanh: ${qualityLabels[feedback.audioQuality] || 'chưa rõ'}`;
+  meta.append(confidence, audioQuality);
+  if(feedback.confidenceNote){
+    const confidenceNote = document.createElement('span');
+    confidenceNote.className = 'feedback-chip';
+    confidenceNote.textContent = feedback.confidenceNote;
+    meta.appendChild(confidenceNote);
+  }
+  feedbackCopy.append(summary, meta);
+  hero.append(score, feedbackCopy);
   feedbackContent.appendChild(hero);
 
-  if(feedback.speechDetected !== false){
-    const scoreGrid = document.createElement('div');
-    scoreGrid.className = 'score-grid';
-    const scoreLabels = [
-      ['Rõ ràng', feedback.scores?.clarity],
-      ['Cấu trúc', feedback.scores?.structure],
-      ['Lập luận', feedback.scores?.reasoning],
-      ['Truyền đạt', feedback.scores?.delivery],
-    ];
-    scoreLabels.forEach(([label, value])=>{
-      const item = document.createElement('div');
-      item.className = 'score-item';
-      const name = document.createElement('span');
-      name.textContent = label;
-      const number = document.createElement('strong');
-      number.textContent = String(value ?? 0);
-      item.append(name, number);
-      scoreGrid.appendChild(item);
-    });
-    feedbackContent.appendChild(scoreGrid);
+  if(feedback.speechDetected === false){
+    feedbackOverlay.classList.add('show');
+    return;
   }
+
+  const scoreGrid = document.createElement('div');
+  scoreGrid.className = 'score-grid';
+  const scoreLabels = [
+    ['Rõ ràng', feedback.scores?.clarity],
+    ['Cấu trúc', feedback.scores?.structure],
+    ['Lập luận', feedback.scores?.reasoning],
+    ['Truyền đạt', feedback.scores?.delivery],
+  ];
+  scoreLabels.forEach(([label, value])=>{
+    const item = document.createElement('div');
+    item.className = 'score-item';
+    const name = document.createElement('span');
+    name.textContent = label;
+    const number = document.createElement('strong');
+    number.textContent = `${value ?? 0} / 5`;
+    item.append(name, number);
+    scoreGrid.appendChild(item);
+  });
+  feedbackContent.appendChild(scoreGrid);
 
   const argumentSection = document.createElement('section');
   argumentSection.className = 'feedback-section';
   const argumentTitle = document.createElement('h3');
-  argumentTitle.textContent = 'Chuỗi lập luận Gemini nghe được';
+  argumentTitle.textContent = 'Gemini hiểu bài nói như sau';
   const argumentSummary = document.createElement('div');
   argumentSummary.className = 'argument-summary';
   argumentSummary.textContent = feedback.argumentSummary || 'Chưa xác định được chuỗi lập luận rõ ràng.';
   argumentSection.append(argumentTitle, argumentSummary);
   feedbackContent.appendChild(argumentSection);
 
-  const strengths = document.createElement('section');
-  strengths.className = 'feedback-section';
-  const strengthsTitle = document.createElement('h3');
-  strengthsTitle.textContent = 'Điểm làm tốt';
-  strengths.appendChild(strengthsTitle);
-  appendFeedbackList(strengths, feedback.strengths);
-  feedbackContent.appendChild(strengths);
+  if((feedback.strengths || []).length){
+    const strengths = document.createElement('section');
+    strengths.className = 'feedback-section';
+    const strengthsTitle = document.createElement('h3');
+    strengthsTitle.textContent = 'Điểm làm tốt có bằng chứng';
+    strengths.appendChild(strengthsTitle);
+    appendFeedbackList(strengths, feedback.strengths);
+    feedbackContent.appendChild(strengths);
+  }
 
-  const improvements = document.createElement('section');
-  improvements.className = 'feedback-section';
-  const improvementsTitle = document.createElement('h3');
-  improvementsTitle.textContent = 'Điểm cần cải thiện';
-  improvements.appendChild(improvementsTitle);
-  (feedback.improvements || []).forEach(improvement=>{
-    const card = document.createElement('div');
-    card.className = 'improvement-card';
-    const area = document.createElement('strong');
-    area.textContent = improvement.area;
-    const observation = document.createElement('p');
-    observation.textContent = improvement.observation;
-    const action = document.createElement('p');
-    action.className = 'action';
-    action.textContent = `Luyện ngay: ${improvement.action}`;
-    card.append(area, observation, action);
-    improvements.appendChild(card);
-  });
-  feedbackContent.appendChild(improvements);
+  if((feedback.improvements || []).length){
+    const improvements = document.createElement('section');
+    improvements.className = 'feedback-section';
+    const improvementsTitle = document.createElement('h3');
+    improvementsTitle.textContent = 'Ưu tiên cải thiện ở lượt tới';
+    improvements.appendChild(improvementsTitle);
+    (feedback.improvements || []).forEach(improvement=>{
+      const card = document.createElement('div');
+      card.className = 'improvement-card';
+      const area = document.createElement('strong');
+      area.textContent = improvement.area;
+      const observation = document.createElement('p');
+      observation.textContent = improvement.observation;
+      const action = document.createElement('p');
+      action.className = 'action';
+      action.textContent = `Luyện ngay: ${improvement.action}`;
+      card.append(area, observation, action);
+      improvements.appendChild(card);
+    });
+    feedbackContent.appendChild(improvements);
+  }
 
   const logicSection = document.createElement('section');
   logicSection.className = 'feedback-section';
   const logicTitle = document.createElement('h3');
-  logicTitle.textContent = 'Lỗi logic · reviewer khó tính';
+  logicTitle.textContent = 'Điểm lập luận cần làm rõ';
   logicSection.appendChild(logicTitle);
   if((feedback.logicIssues || []).length===0){
     const empty = document.createElement('p');
     empty.className = 'feedback-summary';
-    empty.textContent = 'Không phát hiện lỗi logic rõ ràng trong phần audio nghe được.';
+    empty.textContent = 'Không thấy điểm suy luận yếu nào đủ rõ để kết luận từ phần audio nghe được.';
     logicSection.appendChild(empty);
   }
   (feedback.logicIssues || []).forEach(issue=>{
@@ -1529,7 +1560,8 @@ function renderSpeechFeedback(feedback){
     type.textContent = issue.issueType;
     const excerpt = document.createElement('p');
     excerpt.className = 'issue-excerpt';
-    excerpt.textContent = `“${issue.excerpt}”`;
+    const evidenceText = issue.excerptType === 'quote' ? `“${issue.excerpt}”` : `Diễn ý: ${issue.excerpt}`;
+    excerpt.textContent = `${issue.timestamp ? `${issue.timestamp} · ` : ''}${evidenceText}`;
     const critique = document.createElement('p');
     critique.className = 'issue-detail';
     critique.textContent = `Vì sao yếu: ${issue.critique}`;
@@ -1545,7 +1577,7 @@ function renderSpeechFeedback(feedback){
     const factualSection = document.createElement('section');
     factualSection.className = 'feedback-section';
     const factualTitle = document.createElement('h3');
-    factualTitle.textContent = 'Thông tin sai hoặc cần kiểm chứng';
+    factualTitle.textContent = 'Mệnh đề nên kiểm chứng';
     factualSection.appendChild(factualTitle);
     feedback.factualIssues.forEach(issue=>{
       const card = document.createElement('div');
@@ -1555,13 +1587,13 @@ function renderSpeechFeedback(feedback){
       type.textContent = 'Kiểm chứng';
       const excerpt = document.createElement('p');
       excerpt.className = 'issue-excerpt';
-      excerpt.textContent = `“${issue.excerpt}”`;
+      excerpt.textContent = `${issue.timestamp ? `${issue.timestamp} · ` : ''}${issue.excerpt}`;
       const concern = document.createElement('p');
       concern.className = 'issue-detail';
       concern.textContent = issue.concern;
       const correction = document.createElement('p');
       correction.className = 'issue-fix';
-      correction.textContent = `Sửa/diễn đạt an toàn hơn: ${issue.correction}`;
+      correction.textContent = `Diễn đạt thận trọng hơn: ${issue.correction}`;
       const verification = document.createElement('p');
       verification.className = 'issue-detail';
       verification.textContent = `Cần kiểm tra: ${issue.verification}`;
@@ -1571,23 +1603,27 @@ function renderSpeechFeedback(feedback){
     feedbackContent.appendChild(factualSection);
   }
 
-  const questionsSection = document.createElement('section');
-  questionsSection.className = 'feedback-section';
-  const questionsTitle = document.createElement('h3');
-  questionsTitle.textContent = 'Ba câu hỏi phản biện khó';
-  questionsSection.appendChild(questionsTitle);
-  appendFeedbackList(questionsSection, feedback.toughQuestions);
-  feedbackContent.appendChild(questionsSection);
+  if((feedback.toughQuestions || []).length){
+    const questionsSection = document.createElement('section');
+    questionsSection.className = 'feedback-section';
+    const questionsTitle = document.createElement('h3');
+    questionsTitle.textContent = 'Câu hỏi để đào sâu';
+    questionsSection.appendChild(questionsTitle);
+    appendFeedbackList(questionsSection, feedback.toughQuestions);
+    feedbackContent.appendChild(questionsSection);
+  }
 
-  const revisedSection = document.createElement('section');
-  revisedSection.className = 'feedback-section';
-  const revisedTitle = document.createElement('h3');
-  revisedTitle.textContent = 'Lập luận lại cho chặt chẽ hơn';
-  const revisedArgument = document.createElement('div');
-  revisedArgument.className = 'revised-argument';
-  revisedArgument.textContent = feedback.revisedArgument || 'Chưa đủ nội dung để viết lại lập luận.';
-  revisedSection.append(revisedTitle, revisedArgument);
-  feedbackContent.appendChild(revisedSection);
+  if(feedback.revisedArgument){
+    const revisedSection = document.createElement('section');
+    revisedSection.className = 'feedback-section';
+    const revisedTitle = document.createElement('h3');
+    revisedTitle.textContent = 'Một mẫu nói lại · không phải đáp án duy nhất';
+    const revisedArgument = document.createElement('div');
+    revisedArgument.className = 'revised-argument';
+    revisedArgument.textContent = feedback.revisedArgument;
+    revisedSection.append(revisedTitle, revisedArgument);
+    feedbackContent.appendChild(revisedSection);
+  }
 
   const nextSection = document.createElement('section');
   nextSection.className = 'feedback-section';
