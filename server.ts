@@ -1,1 +1,1 @@
-import './server.mjs';
+export { default, handler, server } from './server.mjs';

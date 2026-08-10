@@ -1,9 +1,10 @@
 import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
-import { dirname, join } from 'node:path';
+import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const ROOT_DIR = dirname(fileURLToPath(import.meta.url));
+const MODULE_PATH = fileURLToPath(import.meta.url);
+const ROOT_DIR = dirname(MODULE_PATH);
 const PORT = Number(process.env.PORT || 3000);
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-3.6-flash';
@@ -489,7 +490,7 @@ async function generateSpeechFeedback({ audio, mimeType, topic, categoryId, dura
   throw lastParseError || new Error('Không thể đọc nhận xét từ Gemini.');
 }
 
-export const server = createServer(async (request, response) => {
+export async function handler(request, response) {
   try {
     const url = new URL(request.url, `http://${request.headers.host || 'localhost'}`);
 
@@ -569,8 +570,14 @@ export const server = createServer(async (request, response) => {
     console.error(error);
     sendJson(response, statusCode, { error: publicMessage });
   }
-});
+}
 
-server.listen(PORT, '0.0.0.0', () => {
-  console.log(`Brainroot đang chạy tại http://127.0.0.1:${PORT}`);
-});
+export default handler;
+
+export const server = createServer(handler);
+
+if (process.argv[1] && resolve(process.argv[1]) === MODULE_PATH) {
+  server.listen(PORT, '0.0.0.0', () => {
+    console.log(`Brainroot đang chạy tại http://127.0.0.1:${PORT}`);
+  });
+}
