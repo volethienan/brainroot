@@ -1,0 +1,1772 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Chống Não Tàn 🧠 — luyện nói tiếng Việt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B0B0D;
+    --panel:#161418;
+    --panel-2:#1C191F;
+    --line:rgba(255,255,255,0.10);
+    --line-soft:rgba(255,255,255,0.06);
+    --ink:#F4EFE6;
+    --ink-dim:#9C958E;
+    --accent:#DE8C52;
+    --accent-ink:#241207;
+    --cyan:#7FD3E0;
+    --green:#7FCB92;
+    --coral:#E2685A;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(ellipse 800px 500px at 12% -8%, rgba(222,140,82,0.14) 0%, transparent 60%),
+      radial-gradient(ellipse 700px 500px at 100% 15%, rgba(127,211,224,0.08) 0%, transparent 55%),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Inter', system-ui, sans-serif;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; transition-duration:0.01ms !important;}
+  }
+
+  .wrap{
+    width:100%;
+    max-width:600px;
+    margin:0 auto;
+    padding:52px 22px 60px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+
+  .brand{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:30px;
+    text-align:center;
+  }
+  .brand-sub{
+    color:var(--ink-dim);
+    font-size:13px;
+    text-align:center;
+    margin-top:6px;
+    margin-bottom:36px;
+  }
+
+  /* ---------- Mode toggle ---------- */
+  .mode-toggle{
+    display:inline-flex;
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:4px;
+    gap:2px;
+  }
+  .mode-seg{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    padding:9px 16px;
+    border-radius:999px;
+    font-size:13.5px;
+    font-weight:600;
+    color:var(--ink-dim);
+    cursor:pointer;
+    white-space:nowrap;
+    user-select:none;
+  }
+  .mode-seg[data-on="1"]{
+    background:var(--accent);
+    color:var(--accent-ink);
+  }
+  .mode-hint{
+    color:var(--ink-dim);
+    font-size:13px;
+    text-align:center;
+    max-width:380px;
+    margin-top:14px;
+    line-height:1.55;
+  }
+
+  /* ---------- Category dropdown ---------- */
+  .cat-wrap{position:relative;margin-top:22px;}
+  .cat-trigger{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    background:transparent;
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:10px 18px;
+    color:var(--ink);
+    font-size:13.5px;
+    font-weight:600;
+    cursor:pointer;
+    user-select:none;
+  }
+  .cat-trigger .chev{color:var(--ink-dim);font-size:11px;transition:transform 0.15s;}
+  .cat-trigger.open .chev{transform:rotate(180deg);}
+  .cat-list{
+    position:absolute;
+    top:calc(100% + 8px);
+    left:50%;
+    transform:translateX(-50%);
+    width:230px;
+    max-height:320px;
+    overflow-y:auto;
+    background:var(--panel-2);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:6px;
+    display:none;
+    z-index:40;
+    box-shadow:0 20px 50px -20px rgba(0,0,0,0.6);
+  }
+  .cat-list.show{display:block;}
+  .cat-item{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:9px 11px;
+    border-radius:10px;
+    font-size:13.5px;
+    color:var(--ink);
+    cursor:pointer;
+  }
+  .cat-item:hover{background:var(--line-soft);}
+  .cat-item[data-sel="1"]{color:var(--accent);}
+
+  /* ---------- Stage ---------- */
+  .stage{
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    min-height:210px;
+    justify-content:center;
+    margin-top:44px;
+  }
+  .eyebrow{
+    font-family:'Inter', sans-serif;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:16px;
+    min-height:14px;
+  }
+  .card{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:clamp(30px, 6.6vw, 50px);
+    line-height:1.18;
+    max-width:100%;
+    padding:0 6px;
+    color:var(--ink);
+  }
+  .card.placeholder{
+    font-family:'Inter', sans-serif;
+    font-weight:500;
+    font-size:16px;
+    color:var(--ink-dim);
+  }
+  .card.spinning{animation:cardflip 0.13s linear;}
+  @keyframes cardflip{
+    0%{transform:rotateX(0deg);}
+    50%{transform:rotateX(-90deg);}
+    100%{transform:rotateX(0deg);}
+  }
+  .hint-btn{
+    margin-top:20px;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:9px 14px;
+    border-radius:999px;
+    border:1px solid rgba(222,140,82,0.34);
+    background:rgba(222,140,82,0.08);
+    color:var(--accent);
+    font-family:'Inter', sans-serif;
+    font-size:12.5px;
+    font-weight:700;
+    cursor:pointer;
+    transition:background 0.15s, border-color 0.15s, transform 0.12s;
+  }
+  .hint-btn:hover{background:rgba(222,140,82,0.15);border-color:var(--accent);}
+  .hint-btn:active{transform:scale(0.97);}
+  .hint-btn:disabled{opacity:0;pointer-events:none;}
+  .hint-btn .bulb{font-size:16px;filter:saturate(0.9);}
+  .hint-btn.loading .bulb{animation:bulbPulse 0.8s ease-in-out infinite alternate;}
+  @keyframes bulbPulse{from{filter:saturate(0.8);transform:scale(0.92);}to{filter:saturate(1.4);transform:scale(1.12);}}
+
+  /* ---------- Actions ---------- */
+  .actions{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    margin-top:36px;
+    flex-wrap:wrap;
+  }
+  .btn{
+    font-family:'Inter', sans-serif;
+    font-weight:600;
+    font-size:14px;
+    padding:13px 22px;
+    border-radius:999px;
+    border:none;
+    cursor:pointer;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    transition:transform 0.12s ease, filter 0.12s ease;
+  }
+  .btn:active{transform:scale(0.97);}
+  .btn-primary{background:var(--accent);color:var(--accent-ink);}
+  .btn-primary:hover{filter:brightness(1.08);}
+  .btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--line);}
+  .btn-ghost:hover{border-color:var(--ink-dim);}
+  .btn:disabled{opacity:0.4;cursor:not-allowed;}
+  .icon-btn{
+    width:44px;height:44px;
+    border-radius:50%;
+    border:1px solid var(--line);
+    background:transparent;
+    color:var(--ink-dim);
+    font-size:16px;
+    cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .icon-btn:hover{color:var(--ink);border-color:var(--ink-dim);}
+
+  /* ---------- History ---------- */
+  .history{margin-top:50px;width:100%;}
+  .history h3{font-size:11px;text-transform:uppercase;letter-spacing:0.12em;color:var(--ink-dim);margin:0 0 10px;font-weight:700;text-align:center;}
+  .hist-list{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;}
+  .hist-item{
+    padding:7px 13px;
+    border-radius:999px;
+    background:var(--panel);
+    border:1px solid var(--line);
+    font-size:12.5px;
+    cursor:pointer;
+    color:var(--ink-dim);
+  }
+  .hist-item:hover{color:var(--ink);border-color:var(--ink-dim);}
+
+  /* ================= SETTINGS MODAL ================= */
+  .modal-overlay{
+    position:fixed;inset:0;
+    background:rgba(0,0,0,0.55);
+    display:none;
+    align-items:center;justify-content:center;
+    z-index:200;
+    padding:20px;
+  }
+  .modal-overlay.show{display:flex;}
+  .modal{
+    width:100%;max-width:380px;
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:22px;
+    padding:26px 26px 24px;
+  }
+  .modal h2{
+    font-family:'Fraunces', serif;
+    font-size:22px;
+    font-weight:600;
+    margin:0 0 4px;
+  }
+  .modal .sub{color:var(--ink-dim);font-size:13px;margin:0 0 22px;}
+  .hint-modal{max-width:520px;max-height:min(82vh,720px);overflow:auto;position:relative;}
+  .hint-close{
+    position:absolute;right:18px;top:16px;
+    width:34px;height:34px;border-radius:50%;
+    border:1px solid var(--line);background:transparent;color:var(--ink-dim);
+    cursor:pointer;font-size:15px;
+  }
+  .hint-close:hover{color:var(--ink);border-color:var(--ink-dim);}
+  .hint-topic{font-family:'Fraunces',serif;font-size:20px;line-height:1.25;color:var(--accent);margin:0 42px 24px 0;}
+  .hint-section{padding-top:18px;margin-top:18px;border-top:1px solid var(--line-soft);}
+  .hint-section:first-of-type{padding-top:0;margin-top:0;border-top:none;}
+  .hint-section h3{margin:0 0 9px;font-size:10.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-dim);}
+  .hint-definition{font-size:14px;line-height:1.7;margin:0;color:var(--ink);}
+  .hint-keys{display:flex;flex-wrap:wrap;gap:8px;}
+  .hint-key{padding:7px 11px;border-radius:999px;background:rgba(127,211,224,0.08);border:1px solid rgba(127,211,224,0.22);color:var(--cyan);font-size:12.5px;}
+  .hint-questions{margin:0;padding-left:20px;color:var(--ink);}
+  .hint-questions li{padding-left:4px;margin:0 0 10px;font-size:13.5px;line-height:1.55;}
+  .hint-loading,.hint-error{color:var(--ink-dim);font-size:13.5px;line-height:1.6;padding:18px 0;}
+  .hint-error{color:var(--coral);}
+  .slider-block{margin-bottom:22px;}
+  .slider-label{
+    display:flex;justify-content:space-between;align-items:baseline;
+    margin-bottom:8px;
+  }
+  .slider-label .name{
+    font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);
+  }
+  .slider-label .val{font-family:'Fraunces', serif;font-size:17px;font-weight:600;}
+  input[type=range]{
+    -webkit-appearance:none;
+    width:100%;height:4px;
+    border-radius:999px;
+    background:var(--line);
+    outline:none;
+  }
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none;
+    width:18px;height:18px;border-radius:50%;
+    background:var(--accent);cursor:pointer;
+    border:3px solid var(--panel);
+    box-shadow:0 0 0 1px var(--accent);
+  }
+  input[type=range]::-moz-range-thumb{
+    width:18px;height:18px;border-radius:50%;
+    background:var(--accent);cursor:pointer;border:3px solid var(--panel);
+  }
+  .range-minmax{display:flex;justify-content:space-between;color:var(--ink-dim);font-size:11.5px;margin-top:6px;}
+  .slider-note{color:var(--ink-dim);font-size:11.5px;margin-top:6px;}
+  .mute-row{
+    display:flex;align-items:center;gap:10px;
+    padding-top:14px;margin-top:4px;
+    border-top:1px solid var(--line-soft);
+    font-size:13.5px;color:var(--ink);
+    cursor:pointer;
+    user-select:none;
+  }
+  .mute-row input{width:16px;height:16px;accent-color:var(--accent);}
+  .modal .done-btn{width:100%;margin-top:20px;justify-content:center;font-size:15px;padding:14px;}
+
+  /* ================= FULLSCREEN TIMER ================= */
+  .fs-overlay{
+    position:fixed;inset:0;
+    background:
+      radial-gradient(ellipse 900px 600px at 50% -10%, rgba(127,211,224,0.06) 0%, transparent 60%),
+      var(--bg);
+    z-index:300;
+    display:none;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:32px;
+  }
+  .fs-overlay.show{display:flex;}
+  .fs-exit{
+    position:absolute;top:22px;right:22px;
+    width:42px;height:42px;border-radius:50%;
+    border:1px solid var(--line);
+    background:var(--panel);
+    color:var(--ink-dim);
+    font-size:17px;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .fs-exit:hover{color:var(--ink);}
+  .fs-topic{
+    font-family:'Inter', sans-serif;
+    font-weight:700;
+    font-size:14px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--accent);
+    max-width:520px;
+    margin-bottom:18px;
+  }
+  .fs-phase{
+    font-family:'Inter', sans-serif;
+    font-weight:700;
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--cyan);
+    margin-bottom:34px;
+    transition:color 0.3s;
+  }
+  .fs-phase.speak{color:var(--accent);}
+  .fs-phase.hidden{display:none;}
+  .recording-status{
+    display:none;
+    align-items:center;
+    gap:8px;
+    margin:-16px 0 24px;
+    color:var(--coral);
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+  }
+  .recording-status.show{display:flex;}
+  .recording-status.error{color:var(--ink-dim);}
+  .recording-status.analyzing{color:var(--cyan);}
+  .record-dot{width:9px;height:9px;border-radius:50%;background:currentColor;box-shadow:0 0 0 4px rgba(226,104,90,0.12);animation:recordPulse 1s ease-in-out infinite;}
+  .recording-status.error .record-dot,.recording-status.analyzing .record-dot{animation:none;box-shadow:none;}
+  @keyframes recordPulse{50%{opacity:0.35;transform:scale(0.8);}}
+
+  .framework-row{display:flex;gap:8px;margin-bottom:26px;}
+  .fw-seg{
+    padding:9px 15px;
+    border-radius:999px;
+    border:1px solid var(--line);
+    font-size:12.5px;
+    font-weight:600;
+    color:var(--ink-dim);
+    transition:all 0.25s;
+  }
+  .fw-seg.active{border-color:var(--green);color:var(--green);}
+
+  .fs-ringwrap{position:relative;width:min(58vw, 260px);height:min(58vw, 260px);}
+  .fs-ringwrap svg{width:100%;height:100%;transform:rotate(-90deg);}
+  .fs-ringwrap circle{fill:none;stroke-width:5;}
+  .fs-track{stroke:var(--line);}
+  .fs-prog{stroke:var(--cyan);stroke-linecap:round;transition:stroke-dashoffset 1s linear, stroke 0.3s;}
+  .fs-prog.speak{stroke:var(--accent);}
+  .fs-prog.warn{stroke:var(--coral);}
+  .fs-prog.hidden{opacity:0;}
+  .fs-segarc{
+    stroke:var(--accent);
+    stroke-linecap:round;
+    stroke-width:8;
+    transform-origin:140px 140px;
+    transition:stroke-dasharray 0.25s linear, transform 0.4s ease, stroke 0.4s ease;
+    display:none;
+  }
+  .fs-segarc.show{display:block;}
+  .fs-num{
+    position:absolute;inset:0;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-variant-numeric:tabular-nums;
+    font-size:clamp(44px, 11vw, 64px);
+    color:var(--ink);
+  }
+  .fs-caption{
+    margin-top:26px;
+    font-family:'Fraunces', serif;
+    font-size:17px;
+    color:var(--ink-dim);
+  }
+  .fs-subcaption{
+    margin-top:8px;
+    font-family:'Inter', sans-serif;
+    font-weight:600;
+    font-size:13px;
+    color:var(--ink-dim);
+    display:none;
+  }
+  .fs-subcaption.show{display:block;}
+  .fs-controls{display:flex;align-items:center;gap:18px;margin-top:28px;flex-wrap:wrap;justify-content:center;}
+  .fs-link{color:var(--ink-dim);font-size:13.5px;text-decoration:underline;cursor:pointer;background:none;border:none;font-family:'Inter';}
+  .fs-link:hover{color:var(--ink);}
+
+  .feedback-overlay{z-index:400;}
+  .feedback-modal{max-width:560px;max-height:min(88vh,760px);overflow:auto;position:relative;}
+  .feedback-topic{color:var(--accent);font-size:13px;font-weight:700;margin:2px 44px 20px 0;line-height:1.5;}
+  .feedback-hero{display:flex;align-items:center;gap:18px;padding:18px;border-radius:18px;background:var(--panel-2);border:1px solid var(--line);}
+  .feedback-score{width:78px;height:78px;border-radius:50%;flex:0 0 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;border:3px solid var(--accent);color:var(--accent);}
+  .feedback-score strong{font-family:'Fraunces',serif;font-size:30px;line-height:1;}
+  .feedback-score span{font-size:10px;margin-top:4px;color:var(--ink-dim);}
+  .feedback-summary{font-size:13.5px;line-height:1.65;color:var(--ink);margin:0;}
+  .score-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:14px;}
+  .score-item{background:var(--panel-2);border:1px solid var(--line-soft);border-radius:12px;padding:11px 12px;display:flex;justify-content:space-between;gap:10px;font-size:12.5px;color:var(--ink-dim);}
+  .score-item strong{color:var(--cyan);font-size:14px;}
+  .feedback-section{padding-top:18px;margin-top:18px;border-top:1px solid var(--line-soft);}
+  .feedback-section h3{margin:0 0 10px;font-size:10.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-dim);}
+  .feedback-list{margin:0;padding-left:19px;}
+  .feedback-list li{font-size:13.5px;line-height:1.55;margin-bottom:8px;padding-left:3px;}
+  .improvement-card{padding:13px 14px;border-radius:13px;background:var(--panel-2);border:1px solid var(--line-soft);margin-bottom:9px;}
+  .improvement-card strong{display:block;color:var(--accent);font-size:12.5px;margin-bottom:5px;}
+  .improvement-card p{font-size:13px;line-height:1.55;margin:3px 0;color:var(--ink);}
+  .improvement-card .action{color:var(--green);}
+  .argument-summary{padding:14px;border-radius:13px;background:rgba(127,211,224,0.07);border:1px solid rgba(127,211,224,0.18);color:var(--ink);font-size:13.5px;line-height:1.65;}
+  .logic-card,.factual-card{padding:14px;border-radius:13px;background:var(--panel-2);margin-bottom:10px;}
+  .logic-card{border:1px solid rgba(226,104,90,0.28);}
+  .factual-card{border:1px solid rgba(127,211,224,0.24);}
+  .issue-type{display:inline-flex;padding:4px 8px;border-radius:999px;background:rgba(226,104,90,0.1);color:var(--coral);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;}
+  .factual-card .issue-type{background:rgba(127,211,224,0.09);color:var(--cyan);}
+  .issue-excerpt{font-family:'Fraunces',serif;font-style:italic;color:var(--ink);font-size:14px;line-height:1.5;margin:0 0 8px;}
+  .issue-detail{font-size:13px;line-height:1.55;margin:5px 0;color:var(--ink-dim);}
+  .issue-fix{font-size:13px;line-height:1.55;margin:8px 0 0;color:var(--green);}
+  .revised-argument{padding:15px;border-radius:13px;background:rgba(222,140,82,0.08);border:1px solid rgba(222,140,82,0.22);font-family:'Fraunces',serif;font-size:15px;line-height:1.65;color:var(--ink);}
+  .next-practice{padding:14px;border-radius:13px;background:rgba(127,203,146,0.08);border:1px solid rgba(127,203,146,0.2);color:var(--green);font-size:13.5px;line-height:1.6;}
+  @media(max-width:480px){.feedback-hero{align-items:flex-start}.score-grid{grid-template-columns:1fr}.feedback-score{width:66px;height:66px}.feedback-score strong{font-size:26px;}}
+
+  footer{
+    margin-top:52px;
+    text-align:center;
+    color:var(--ink-dim);
+    font-size:11.5px;
+  }
+  kbd{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:5px;
+    padding:1px 6px;
+    font-family:'Inter', sans-serif;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="brand">🧠 Chống Não Tàn</div>
+  <div class="brand-sub">luyện phản xạ nói bằng chủ đề bất kỳ</div>
+
+  <div class="mode-toggle" id="modeToggle">
+    <div class="mode-seg" data-mode="cuff" data-on="1">🧠 Phản xạ nhanh</div>
+    <div class="mode-seg" data-mode="deep" data-on="0">🔍 Tư duy sâu</div>
+  </div>
+  <div class="mode-hint" id="modeHint"></div>
+
+  <div class="cat-wrap">
+    <button class="cat-trigger" id="catTrigger">
+      <span id="catIcon">✨</span>
+      <span id="catLabel">Tổng hợp</span>
+      <span class="chev">▾</span>
+    </button>
+    <div class="cat-list" id="catList"></div>
+  </div>
+
+  <div class="stage">
+    <div class="eyebrow" id="eyebrow"></div>
+    <div class="card placeholder" id="card">bấm "quay" để bốc một chủ đề</div>
+    <button class="hint-btn" id="hintBtn" disabled title="Gợi ý nghiên cứu và phản biện">
+      <span class="bulb">💡</span><span>Gợi ý</span>
+    </button>
+  </div>
+
+  <div class="actions">
+    <button class="btn btn-primary" id="spinBtn">Quay</button>
+    <button class="btn btn-ghost" id="startBtn" disabled>Bắt đầu</button>
+    <button class="icon-btn" id="settingsBtn" title="Cài đặt">⚙</button>
+  </div>
+
+  <div class="history">
+    <h3>Đã quay gần đây</h3>
+    <div class="hist-list" id="histList"></div>
+  </div>
+
+  <footer>nhấn <kbd>space</kbd> để quay &nbsp;·&nbsp; <kbd>enter</kbd> để bắt đầu &nbsp;·&nbsp; <kbd>esc</kbd> để đóng</footer>
+</div>
+
+<!-- Settings modal -->
+<div class="modal-overlay" id="settingsOverlay">
+  <div class="modal">
+    <h2>Cài đặt</h2>
+    <p class="sub">Thời lượng hẹn giờ, tính theo phút.</p>
+
+    <div class="slider-block">
+      <div class="slider-label"><span class="name">Nói</span><span class="val" id="speechVal">1 phút</span></div>
+      <input type="range" id="speechRange" min="1" max="10" value="1" step="1">
+      <div class="range-minmax"><span>1 phút</span><span>10 phút</span></div>
+    </div>
+
+    <div class="slider-block">
+      <div class="slider-label"><span class="name">Tìm hiểu</span><span class="val" id="researchVal">15 phút</span></div>
+      <input type="range" id="researchRange" min="1" max="60" value="15" step="1">
+      <div class="range-minmax"><span>1 phút</span><span>60 phút</span></div>
+      <div class="slider-note">Chỉ áp dụng ở chế độ Tư duy sâu.</div>
+    </div>
+
+    <label class="mute-row">
+      <input type="checkbox" id="muteCheck">
+      Tắt âm thanh
+    </label>
+
+    <button class="btn btn-primary done-btn" id="settingsDone">Xong</button>
+  </div>
+</div>
+
+<!-- Research hint modal -->
+<div class="modal-overlay" id="hintOverlay">
+  <div class="modal hint-modal">
+    <button class="hint-close" id="hintClose" title="Đóng">✕</button>
+    <h2>Gợi ý nghiên cứu</h2>
+    <p class="hint-topic" id="hintTopic"></p>
+    <div id="hintContent"></div>
+  </div>
+</div>
+
+<!-- Speech feedback modal -->
+<div class="modal-overlay feedback-overlay" id="feedbackOverlay">
+  <div class="modal feedback-modal">
+    <button class="hint-close" id="feedbackClose" title="Đóng">✕</button>
+    <h2>Nhận xét bài nói</h2>
+    <p class="feedback-topic" id="feedbackTopic"></p>
+    <div id="feedbackContent"></div>
+  </div>
+</div>
+
+<!-- Fullscreen timer -->
+<div class="fs-overlay" id="fsOverlay">
+  <button class="fs-exit" id="fsExit" title="Đóng">✕</button>
+  <div class="fs-topic" id="fsTopic">—</div>
+  <div class="fs-phase" id="fsPhase">ĐANG TÌM HIỂU</div>
+  <div class="recording-status" id="recordingStatus">
+    <span class="record-dot"></span><span id="recordingText">Đang ghi âm</span>
+  </div>
+
+  <div class="framework-row" id="fwRow" style="display:none;">
+    <div class="fw-seg" data-i="0">Chuyện gì?</div>
+    <div class="fw-seg" data-i="1">Vậy thì sao?</div>
+    <div class="fw-seg" data-i="2">Giờ làm gì?</div>
+  </div>
+
+  <div class="fs-ringwrap">
+    <svg viewBox="0 0 280 280">
+      <circle class="fs-track" cx="140" cy="140" r="118"></circle>
+      <circle class="fs-prog" id="fsProg" cx="140" cy="140" r="118"></circle>
+      <circle class="fs-segarc" id="fsSegArc" cx="140" cy="140" r="118"></circle>
+    </svg>
+    <div class="fs-num" id="fsNum">--:--</div>
+  </div>
+
+  <div class="fs-caption" id="fsCaption">Tìm hiểu.</div>
+  <div class="fs-subcaption" id="fsSubcaption"></div>
+
+  <div class="fs-controls" id="fsControls"></div>
+</div>
+
+<script>
+const CATS = [
+  {id:'tai-chinh', name:'Tài chính cá nhân', icon:'💰', cuff:[
+    'Runway tài chính','Lối sống phình to','Điểm tín dụng','Tốc độ đốt tiền','Quỹ dự phòng',
+    'Khẩu vị rủi ro','Trì hoãn hưởng thụ','Giá trị tài sản ròng','Nợ lãi suất cao','Bẫy đăng ký dịch vụ',
+    'Dòng tiền','Lãi kép'
+  ], deep:[
+    'Nghịch lý tiết kiệm','Hiệu ứng mỏ neo khi chi tiêu','Bẫy thanh khoản là gì',
+    'Vì sao người giàu vẫn phá sản','Lạm phát do cầu kéo hay chi phí đẩy','Giả thuyết thị trường hiệu quả'
+  ]},
+  {id:'khoi-nghiep', name:'Khởi nghiệp', icon:'🚀', cuff:[
+    'Hustle hay đòn bẩy','Founder mode','Nghệ thuật nói không','Tiền mặt là oxy','Skin in the game',
+    'Con hào kinh tế','Bootstrapping','Khách hàng đầu tiên','Xoay trục','Vốn mồ hôi',
+    'Xây dựng công khai','Thất bại nhanh'
+  ], deep:[
+    'Vì sao hầu hết startup thất bại','Product-market fit thật sự là gì','Founder mode có chỉ là marketing',
+    'Khi nào nên gọi vốn thay vì bootstrapping','Đạo đức của tăng trưởng bằng mọi giá',
+    'Nghịch lý nhà sáng lập giỏi kỹ thuật, kém quản trị'
+  ]},
+  {id:'startup', name:'Startup', icon:'🌱', cuff:[
+    'Vòng gọi vốn hạt giống','Định giá công ty','Cổ phần pha loãng','MVP','Term sheet','Cap table',
+    'Series A','Đốt tiền','Exit strategy','Unicorn','Down round','Vesting'
+  ], deep:[
+    'Vì sao Series A khó hơn seed round','Nhận vốn từ nhiều nhà đầu tư nhỏ, nên hay không',
+    'Startup studio có thực sự hiệu quả','Down round ảnh hưởng gì đến nhân viên',
+    'AI có đang tạo bong bóng định giá startup','Bootstrapping có còn khả thi thời nay'
+  ]},
+  {id:'cong-nghe', name:'Tech / AI', icon:'🤖', cuff:[
+    'AI tạo sinh','Deepfake','Prompt engineering','Chatbot AI','Kinh tế gig','Mô hình ngôn ngữ lớn',
+    'Điện toán đám mây','Bảo mật dữ liệu','Tự động hoá','Metaverse','Ví điện tử','Sa thải công nghệ'
+  ], deep:[
+    'AI có đang thay thế tư duy phản biện','Quy định AI nên chặt hay lỏng',
+    'Open-source AI có an toàn hơn closed-source','AI tạo sinh và vấn đề bản quyền',
+    'Singularity có thực sự đến gần','Ai chịu trách nhiệm khi AI sai'
+  ]},
+  {id:'the-hinh', name:'Thể hình', icon:'💪', cuff:[
+    'Progressive overload','Ngày nghỉ phục hồi','Protein sau tập','Cardio hay tạ','Đau cơ trễ (DOMS)',
+    'Deload week','Chỉ số VO2 max','Compound hay isolation','Overtraining','Mind-muscle connection',
+    'Thâm hụt calo','Khởi động đúng cách'
+  ], deep:[
+    'Cardio lúc đói có đốt mỡ hiệu quả hơn','Vì sao progressive overload quan trọng hơn loại bài tập',
+    'Giấc ngủ ảnh hưởng phục hồi cơ ra sao','Tập gym có thể gây nghiện không',
+    'Sự thật về "muscle confusion"','Testosterone và tập luyện sức mạnh'
+  ]},
+  {id:'dinh-duong', name:'Dinh dưỡng', icon:'🥗', cuff:[
+    'Calo rỗng','Chỉ số đường huyết','Vi chất dinh dưỡng','Nhịn ăn gián đoạn','Protein hoàn chỉnh',
+    'Chất xơ hoà tan','Ăn sạch','Carb tốt hay xấu','Chất béo bão hoà','Hệ vi sinh đường ruột',
+    'Đường huyết ổn định','Bổ sung vitamin'
+  ], deep:[
+    'Nhịn ăn gián đoạn có hiệu quả lâu dài','Ăn chay trường có thiếu chất không',
+    'Đường có gây nghiện như chất kích thích','Keto có an toàn dài hạn',
+    'Vì sao "ăn sạch" bị thương mại hoá quá mức','Thực phẩm chức năng có thực sự cần thiết'
+  ]},
+  {id:'nang-suat', name:'Năng suất', icon:'⚡', cuff:[
+    'Kỹ thuật Pomodoro','Deep work','Đa nhiệm','Ma trận Eisenhower','Time blocking','Sự trì hoãn',
+    'Quy tắc 2 phút','Batching công việc','Digital detox','Flow state','Định luật Parkinson','Năng lượng hay thời gian'
+  ], deep:[
+    'Đa nhiệm có thực sự giảm hiệu suất','Vì sao to-do list dài lại phản tác dụng',
+    'Deep work còn khả thi giữa thông báo liên tục','Nghỉ ngơi có phải một phần của năng suất',
+    'Có nên đo năng suất bằng số giờ làm việc','AI có đang khiến ta lười tư duy hơn'
+  ]},
+  {id:'lich-su', name:'Lịch sử', icon:'📜', cuff:[
+    'Đế chế La Mã sụp đổ','Con đường tơ lụa','Cách mạng công nghiệp','Thời kỳ Khai sáng','Chiến tranh Lạnh',
+    'Đế chế Ottoman','Cách mạng Pháp','Thời đại khám phá','Đại suy thoái 1929','Phong trào Phục Hưng'
+  ], deep:[
+    'Vì sao đế chế La Mã thực sự sụp đổ','Lịch sử có lặp lại chính nó không',
+    'Ai viết nên lịch sử — kẻ thắng hay sự thật','Cách mạng công nghiệp thay đổi bất bình đẳng ra sao',
+    'Chiến tranh Lạnh có bao giờ thực sự kết thúc','Thuộc địa hoá định hình thế giới hiện đại thế nào'
+  ]},
+  {id:'van-hoc', name:'Văn học', icon:'📚', cuff:[
+    'Dòng ý thức','Ẩn dụ','Nhân vật phản diện phức tạp','Chủ nghĩa hiện sinh','Văn học hậu hiện đại',
+    'Người kể chuyện không đáng tin','Bi kịch Hy Lạp','Chủ nghĩa siêu thực','Motif lặp lại','Văn học phản địa đàng'
+  ], deep:[
+    'Văn học có còn định hình tư duy xã hội','AI có thể viết văn hay như con người',
+    'Vì sao dystopia luôn hấp dẫn độc giả','"Cái chết của tác giả" theo Roland Barthes',
+    'Văn học dịch có giữ được hồn nguyên tác','Sách giấy có bị thay thế hoàn toàn bởi audiobook'
+  ]},
+];
+
+const MODE_HINTS = {
+  cuff: 'Chuẩn bị tối thiểu. Thử phản xạ thật nhanh.',
+  deep: 'Quay một chủ đề, đặt giờ tìm hiểu, rồi bắt đầu nói khi đã sẵn sàng.'
+};
+
+const USED_TOPICS_KEY = 'brainroot-used-topics-v1';
+
+function loadUsedTopics(){
+  try{
+    const saved = JSON.parse(localStorage.getItem(USED_TOPICS_KEY) || '[]');
+    return new Set(Array.isArray(saved) ? saved : []);
+  }catch(e){
+    return new Set();
+  }
+}
+
+function saveUsedTopics(){
+  try{
+    localStorage.setItem(USED_TOPICS_KEY, JSON.stringify([...state.usedTopics]));
+  }catch(e){}
+}
+
+function normalizeTopic(word){
+  return String(word || '').trim().replace(/\s+/g, ' ').toLocaleLowerCase('vi');
+}
+
+const state = {
+  mode: 'cuff',
+  catId: 'general',
+  current: null,
+  currentCat: null,
+  currentMode: null,
+  history: [],
+  speechMin: 1,
+  researchMin: 15,
+  muted: false,
+  phase: null,      // 'research' | 'transition' | 'speak'
+  remaining: 0,
+  total: 0,
+  timerId: null,
+  usedTopics: loadUsedTopics(),
+  apiTopics: new Map(),
+  hintCache: new Map(),
+  hintRequests: new Map(),
+  nextSource: 'list',
+  isSpinning: false,
+  mediaRecorder: null,
+  mediaStream: null,
+  audioChunks: [],
+  recordingMimeType: '',
+  recordingStopPromise: null,
+  feedbackPending: false,
+  speechSessionId: 0,
+};
+
+// ---- DOM refs ----
+const modeToggle = document.getElementById('modeToggle');
+const modeHint = document.getElementById('modeHint');
+const catTrigger = document.getElementById('catTrigger');
+const catIcon = document.getElementById('catIcon');
+const catLabel = document.getElementById('catLabel');
+const catList = document.getElementById('catList');
+const eyebrow = document.getElementById('eyebrow');
+const card = document.getElementById('card');
+const spinBtn = document.getElementById('spinBtn');
+const startBtn = document.getElementById('startBtn');
+const settingsBtn = document.getElementById('settingsBtn');
+const histList = document.getElementById('histList');
+const hintBtn = document.getElementById('hintBtn');
+const hintOverlay = document.getElementById('hintOverlay');
+const hintClose = document.getElementById('hintClose');
+const hintTopic = document.getElementById('hintTopic');
+const hintContent = document.getElementById('hintContent');
+const feedbackOverlay = document.getElementById('feedbackOverlay');
+const feedbackClose = document.getElementById('feedbackClose');
+const feedbackTopic = document.getElementById('feedbackTopic');
+const feedbackContent = document.getElementById('feedbackContent');
+
+const settingsOverlay = document.getElementById('settingsOverlay');
+const speechRange = document.getElementById('speechRange');
+const speechVal = document.getElementById('speechVal');
+const researchRange = document.getElementById('researchRange');
+const researchVal = document.getElementById('researchVal');
+const muteCheck = document.getElementById('muteCheck');
+const settingsDone = document.getElementById('settingsDone');
+
+const fsOverlay = document.getElementById('fsOverlay');
+const fsExit = document.getElementById('fsExit');
+const fsTopic = document.getElementById('fsTopic');
+const fsPhase = document.getElementById('fsPhase');
+const recordingStatus = document.getElementById('recordingStatus');
+const recordingText = document.getElementById('recordingText');
+const fwRow = document.getElementById('fwRow');
+const fsProg = document.getElementById('fsProg');
+const fsSegArc = document.getElementById('fsSegArc');
+const fsNum = document.getElementById('fsNum');
+const fsCaption = document.getElementById('fsCaption');
+const fsSubcaption = document.getElementById('fsSubcaption');
+const fsControls = document.getElementById('fsControls');
+
+// ---- audio (tiny beep, no external assets) ----
+let actx = null;
+function beep(freq, dur, gain, type){
+  if(state.muted) return;
+  try{
+    actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+    const o = actx.createOscillator();
+    const g = actx.createGain();
+    o.frequency.value = freq;
+    o.type = type || 'sine';
+    g.gain.value = gain !== undefined ? gain : 0.06;
+    o.connect(g); g.connect(actx.destination);
+    o.start();
+    g.gain.exponentialRampToValueAtTime(0.0001, actx.currentTime + dur);
+    o.stop(actx.currentTime + dur);
+  }catch(e){}
+}
+function landingChime(){
+  // quick two-note digital "confirm" chime
+  beep(1400, 0.07, 0.16, 'square');
+  setTimeout(()=> beep(1866, 0.13, 0.14, 'square'), 65);
+}
+
+// ---- mode toggle ----
+modeToggle.querySelectorAll('.mode-seg').forEach(seg=>{
+  seg.addEventListener('click', ()=>{
+    modeToggle.querySelectorAll('.mode-seg').forEach(s=>s.dataset.on='0');
+    seg.dataset.on='1';
+    state.mode = seg.dataset.mode;
+    modeHint.textContent = MODE_HINTS[state.mode];
+    startBtn.textContent = state.mode==='deep'
+      ? `Bắt đầu tìm hiểu (${state.researchMin} phút)`
+      : `Bắt đầu nói (${state.speechMin} phút)`;
+  });
+});
+modeHint.textContent = MODE_HINTS.cuff;
+
+// ---- category dropdown ----
+function renderCatList(){
+  catList.innerHTML = '';
+  const general = document.createElement('div');
+  general.className = 'cat-item';
+  general.dataset.sel = state.catId==='general' ? '1':'0';
+  general.innerHTML = `<span>✨</span><span>Tổng hợp</span>`;
+  general.addEventListener('click', ()=> selectCat('general','✨','Tổng hợp'));
+  catList.appendChild(general);
+  CATS.forEach(c=>{
+    const el = document.createElement('div');
+    el.className = 'cat-item';
+    el.dataset.sel = state.catId===c.id ? '1':'0';
+    el.innerHTML = `<span>${c.icon}</span><span>${c.name}</span>`;
+    el.addEventListener('click', ()=> selectCat(c.id, c.icon, c.name));
+    catList.appendChild(el);
+  });
+}
+function selectCat(id, icon, name){
+  state.catId = id;
+  catIcon.textContent = icon;
+  catLabel.textContent = name;
+  catList.classList.remove('show');
+  catTrigger.classList.remove('open');
+  renderCatList();
+}
+catTrigger.addEventListener('click', (e)=>{
+  e.stopPropagation();
+  catList.classList.toggle('show');
+  catTrigger.classList.toggle('open');
+});
+document.addEventListener('click', (e)=>{
+  if(!catList.contains(e.target) && e.target!==catTrigger){
+    catList.classList.remove('show');
+    catTrigger.classList.remove('open');
+  }
+});
+renderCatList();
+
+// ---- pool / spin ----
+function topicKey(item, mode = state.mode){
+  return `${mode}:${item.cat.id}:${normalizeTopic(item.word)}`;
+}
+
+function fullPool(){
+  const p = [];
+  const src = state.mode === 'deep' ? 'deep' : 'cuff';
+  if(state.catId === 'general'){
+    CATS.forEach(c=> c[src].forEach(w=> p.push({word:w, cat:c})));
+  } else {
+    const c = CATS.find(x=>x.id===state.catId);
+    if(c) c[src].forEach(w=> p.push({word:w, cat:c}));
+  }
+  return p;
+}
+
+function listPool(){
+  return fullPool().filter(item=> !state.usedTopics.has(topicKey(item)));
+}
+
+function availableListPool(){
+  let topics = listPool();
+  if(topics.length>0) return topics;
+
+  fullPool().forEach(item=> state.usedTopics.delete(topicKey(item)));
+  saveUsedTopics();
+  return fullPool();
+}
+
+function apiCacheKey(){
+  return `${state.mode}:${state.catId}`;
+}
+
+function apiPool(){
+  return (state.apiTopics.get(apiCacheKey()) || [])
+    .filter(item=> !state.usedTopics.has(topicKey(item)));
+}
+
+function usedTopicWords(){
+  const prefix = state.catId === 'general'
+    ? `${state.mode}:`
+    : `${state.mode}:${state.catId}:`;
+  return [...state.usedTopics]
+    .filter(key=> key.startsWith(prefix))
+    .map(key=> key.split(':').slice(2).join(':'));
+}
+
+async function generateMoreTopics(){
+  const existingTopics = [...new Set([
+    ...fullPool().map(item=> item.word),
+    ...usedTopicWords(),
+  ])];
+  const response = await fetch('/api/topics', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({
+      mode: state.mode,
+      categoryId: state.catId,
+      existingTopics,
+    }),
+  });
+  const data = await response.json().catch(()=> ({}));
+  if(!response.ok) throw new Error(data.error || 'Không thể kết nối Gemini.');
+
+  const cacheKey = apiCacheKey();
+  const cached = state.apiTopics.get(cacheKey) || [];
+  const known = new Set(cached.map(item=> topicKey(item)));
+  const generated = [];
+  (data.topics || []).forEach(item=>{
+    const cat = CATS.find(c=> c.id === item.categoryId);
+    const word = String(item.word || '').trim().replace(/\s+/g, ' ');
+    if(!cat || !word) return;
+    const topic = {word, cat};
+    const key = topicKey(topic);
+    if(known.has(key) || state.usedTopics.has(key)) return;
+    known.add(key);
+    generated.push(topic);
+  });
+  if(generated.length===0) throw new Error('Gemini chưa tạo được chủ đề mới. Hãy thử lại.');
+  state.apiTopics.set(cacheKey, [...cached, ...generated]);
+}
+
+function sourceEyebrow(source, apiFallback = false){
+  if(apiFallback) return 'DANH SÁCH · GEMINI CHƯA KẾT NỐI';
+  return source === 'api' ? 'CHỦ ĐỀ TỪ GEMINI' : 'CHỦ ĐỀ TỪ DANH SÁCH';
+}
+
+function renderHistory(){
+  histList.innerHTML = '';
+  if(state.history.length===0){
+    histList.innerHTML = '<span style="color:var(--ink-dim);font-size:13px;font-style:italic;">chưa có chủ đề nào</span>';
+    return;
+  }
+  state.history.slice(0,8).forEach(h=>{
+    const el = document.createElement('div');
+    el.className = 'hist-item';
+    el.textContent = `${h.cat.icon} ${h.word}`;
+    el.addEventListener('click', ()=>{
+      state.current = h.word; state.currentCat = h.cat;
+      state.currentMode = h.mode || state.mode;
+      eyebrow.textContent = sourceEyebrow(h.source || 'list');
+      card.classList.remove('placeholder');
+      card.textContent = h.word;
+      startBtn.disabled = false;
+      hintBtn.disabled = false;
+      prefetchHint(h.word, h.cat, state.currentMode);
+    });
+    histList.appendChild(el);
+  });
+}
+
+function makeHintCacheKey(topic, catId, mode){
+  return `${mode}:${catId}:${normalizeTopic(topic)}`;
+}
+
+function hintCacheKey(){
+  return makeHintCacheKey(state.current, state.currentCat.id, state.currentMode || state.mode);
+}
+
+function fetchHint(topic, cat, mode){
+  const cacheKey = makeHintCacheKey(topic, cat.id, mode);
+  if(state.hintCache.has(cacheKey)) return Promise.resolve(state.hintCache.get(cacheKey));
+  if(state.hintRequests.has(cacheKey)) return state.hintRequests.get(cacheKey);
+
+  const request = fetch('/api/hint', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({topic, categoryId:cat.id, mode}),
+  }).then(async response=>{
+    const data = await response.json().catch(()=> ({}));
+    if(!response.ok) throw new Error(data.error || 'Không thể lấy gợi ý từ Gemini.');
+    state.hintCache.set(cacheKey, data.hint);
+    return data.hint;
+  }).finally(()=> state.hintRequests.delete(cacheKey));
+
+  state.hintRequests.set(cacheKey, request);
+  return request;
+}
+
+function prefetchHint(topic, cat, mode){
+  fetchHint(topic, cat, mode).catch(()=>{});
+}
+
+function appendHintList(container, items, className, itemClassName){
+  const list = document.createElement(className === 'hint-keys' ? 'div' : 'ol');
+  list.className = className;
+  items.forEach(text=>{
+    const item = document.createElement(className === 'hint-keys' ? 'span' : 'li');
+    if(itemClassName) item.className = itemClassName;
+    item.textContent = text;
+    list.appendChild(item);
+  });
+  container.appendChild(list);
+}
+
+function renderHint(hint){
+  hintContent.innerHTML = '';
+
+  const definitionSection = document.createElement('section');
+  definitionSection.className = 'hint-section';
+  const definitionTitle = document.createElement('h3');
+  definitionTitle.textContent = 'Hiểu nhanh';
+  const definition = document.createElement('p');
+  definition.className = 'hint-definition';
+  definition.textContent = hint.definition;
+  definitionSection.append(definitionTitle, definition);
+
+  const keysSection = document.createElement('section');
+  keysSection.className = 'hint-section';
+  const keysTitle = document.createElement('h3');
+  keysTitle.textContent = 'Từ khóa để research';
+  keysSection.appendChild(keysTitle);
+  appendHintList(keysSection, hint.researchKeys || [], 'hint-keys', 'hint-key');
+
+  const questionsSection = document.createElement('section');
+  questionsSection.className = 'hint-section';
+  const questionsTitle = document.createElement('h3');
+  questionsTitle.textContent = 'Câu hỏi phản biện';
+  questionsSection.appendChild(questionsTitle);
+  appendHintList(questionsSection, hint.criticalQuestions || [], 'hint-questions');
+
+  hintContent.append(definitionSection, keysSection, questionsSection);
+}
+
+async function openHint(){
+  if(!state.current || !state.currentCat) return;
+  const cacheKey = hintCacheKey();
+  const mode = state.currentMode || state.mode;
+  hintTopic.textContent = `${state.currentCat.icon} ${state.current}`;
+  hintOverlay.classList.add('show');
+
+  if(state.hintCache.has(cacheKey)){
+    renderHint(state.hintCache.get(cacheKey));
+    return;
+  }
+
+  hintBtn.classList.add('loading');
+  hintBtn.disabled = true;
+  hintContent.innerHTML = '<div class="hint-loading">💡 Đang chuẩn bị định nghĩa, từ khóa và góc nhìn phản biện…</div>';
+  try{
+    const hint = await fetchHint(state.current, state.currentCat, mode);
+    renderHint(hint);
+  }catch(error){
+    hintContent.innerHTML = '';
+    const errorBox = document.createElement('div');
+    errorBox.className = 'hint-error';
+    errorBox.textContent = location.protocol === 'file:'
+      ? 'Hãy chạy ứng dụng bằng npm start để sử dụng gợi ý Gemini.'
+      : error.message;
+    hintContent.appendChild(errorBox);
+  }finally{
+    hintBtn.classList.remove('loading');
+    hintBtn.disabled = false;
+  }
+}
+
+function closeHint(){
+  hintOverlay.classList.remove('show');
+}
+
+hintBtn.addEventListener('click', openHint);
+hintClose.addEventListener('click', closeHint);
+hintOverlay.addEventListener('click', (e)=>{ if(e.target===hintOverlay) closeHint(); });
+
+function spinTo(finalPick, allPool, source, pickedMode, apiFallback = false){
+  return new Promise(resolve=>{
+    const cycles = 10;
+    let n = 0;
+    function tick(){
+      card.classList.remove('placeholder');
+      card.classList.add('spinning');
+      if(n < cycles){
+        const r = allPool[Math.floor(Math.random()*allPool.length)];
+        card.textContent = r.word;
+        beep(320 + n*14, 0.04, 0.15, 'square');
+        n++;
+        setTimeout(tick, 55 + Math.pow(n,1.7)*6);
+      } else {
+        card.textContent = finalPick.word;
+        eyebrow.textContent = sourceEyebrow(source, apiFallback);
+        setTimeout(()=>card.classList.remove('spinning'), 140);
+        state.current = finalPick.word;
+        state.currentCat = finalPick.cat;
+        state.currentMode = pickedMode;
+        startBtn.disabled = false;
+        hintBtn.disabled = false;
+        landingChime();
+        resolve();
+      }
+    }
+    tick();
+  });
+}
+
+spinBtn.addEventListener('click', async ()=>{
+  if(state.isSpinning) return;
+  state.isSpinning = true;
+  spinBtn.disabled = true;
+  hintBtn.disabled = true;
+
+  try{
+    let source = state.nextSource;
+    let apiFallback = false;
+    let p;
+
+    if(source==='api'){
+      try{
+        p = apiPool();
+        if(p.length===0){
+          eyebrow.textContent = 'GEMINI ĐANG TẠO';
+          card.classList.remove('placeholder');
+          card.textContent = 'Đang tạo chủ đề mới từ Gemini…';
+          startBtn.disabled = true;
+          await generateMoreTopics();
+          p = apiPool();
+        }
+        if(p.length===0) throw new Error('Gemini chưa trả về chủ đề mới.');
+      }catch(error){
+        console.error(error);
+        source = 'list';
+        apiFallback = true;
+        p = availableListPool();
+      }
+    }else{
+      p = availableListPool();
+    }
+    if(p.length===0) throw new Error('Không còn chủ đề chưa dùng.');
+
+    const pick = p[Math.floor(Math.random()*p.length)];
+    const pickedMode = state.mode;
+    state.usedTopics.add(topicKey(pick));
+    saveUsedTopics();
+    prefetchHint(pick.word, pick.cat, pickedMode);
+    await spinTo(pick, p, source, pickedMode, apiFallback);
+    state.history.unshift({...pick, source, mode:pickedMode});
+    state.history = state.history.slice(0,8);
+    renderHistory();
+    state.nextSource = source === 'list' ? 'api' : 'list';
+    spinBtn.textContent = 'Quay lại';
+  }catch(error){
+    state.current = null;
+    state.currentCat = null;
+    state.currentMode = null;
+    eyebrow.textContent = 'KHÔNG THỂ TẠO CHỦ ĐỀ';
+    card.classList.remove('placeholder', 'spinning');
+    card.textContent = location.protocol === 'file:'
+      ? 'Hãy chạy ứng dụng bằng npm start rồi mở http://127.0.0.1:3000'
+      : error.message;
+    startBtn.disabled = true;
+    hintBtn.disabled = true;
+  }finally{
+    state.isSpinning = false;
+    spinBtn.disabled = false;
+  }
+});
+
+// ---- settings modal ----
+function syncSliderLabels(){
+  speechVal.textContent = state.speechMin + ' phút';
+  researchVal.textContent = state.researchMin + ' phút';
+  startBtn.textContent = state.mode==='deep'
+    ? `Bắt đầu tìm hiểu (${state.researchMin} phút)`
+    : `Bắt đầu nói (${state.speechMin} phút)`;
+}
+speechRange.addEventListener('input', ()=>{ state.speechMin = +speechRange.value; syncSliderLabels(); });
+researchRange.addEventListener('input', ()=>{ state.researchMin = +researchRange.value; syncSliderLabels(); });
+muteCheck.addEventListener('change', ()=>{ state.muted = muteCheck.checked; });
+settingsBtn.addEventListener('click', ()=> settingsOverlay.classList.add('show'));
+settingsDone.addEventListener('click', ()=> settingsOverlay.classList.remove('show'));
+settingsOverlay.addEventListener('click', (e)=>{ if(e.target===settingsOverlay) settingsOverlay.classList.remove('show'); });
+syncSliderLabels();
+
+// ---- fullscreen timer flow ----
+const CIRC = 2 * Math.PI * 118;
+fsProg.style.strokeDasharray = CIRC;
+
+function fmt(sec){
+  const m = Math.floor(sec/60), s = sec%60;
+  return m + ':' + String(s).padStart(2,'0');
+}
+
+function setRing(fraction, colorClass){
+  fsProg.style.strokeDashoffset = CIRC * (1 - fraction);
+  fsProg.className = 'fs-prog ' + colorClass;
+}
+
+function clearTimer(){ if(state.timerId){ clearInterval(state.timerId); state.timerId=null; } }
+
+function startResearch(){
+  state.phase = 'research';
+  state.total = state.researchMin*60;
+  state.remaining = state.total;
+  fsSubcaption.classList.remove('show');
+  recordingStatus.className = 'recording-status';
+  fsTopic.textContent = state.currentCat.icon + '  ' + state.current;
+  fsPhase.textContent = 'ĐANG TÌM HIỂU';
+  fsPhase.className = 'fs-phase';
+  fwRow.style.display = 'none';
+  fsProg.classList.add('hidden');
+  fsSegArc.classList.add('show');
+  fsSegArc.style.transform = 'rotate(0deg)';
+  fsCaption.textContent = 'Tìm hiểu.';
+  renderResearchControls();
+  tickResearch();
+  clearTimer();
+  state.timerId = setInterval(tickResearch, 1000);
+  fsOverlay.classList.add('show');
+}
+function tickResearch(){
+  const elapsedFrac = 1 - Math.max(state.remaining/state.total, 0);
+  const arcLen = Math.max(elapsedFrac, 0.004) * CIRC;
+  fsSegArc.style.strokeDasharray = `${arcLen} ${CIRC}`;
+  fsSegArc.style.stroke = state.remaining<=5 ? 'var(--coral)' : 'var(--cyan)';
+  fsNum.textContent = fmt(state.remaining);
+  if(state.remaining<=3 && state.remaining>0) beep(880,0.08);
+  if(state.remaining<=0){
+    clearTimer();
+    beep(660,0.25);
+    goTransition();
+    return;
+  }
+  state.remaining--;
+}
+function renderResearchControls(){
+  fsControls.innerHTML = '';
+  const doneBtn = document.createElement('button');
+  doneBtn.className = 'btn btn-primary';
+  doneBtn.textContent = 'Xong, tôi đã tìm hiểu';
+  doneBtn.addEventListener('click', ()=>{ clearTimer(); goTransition(); });
+  const closeLink = document.createElement('button');
+  closeLink.className = 'fs-link';
+  closeLink.textContent = 'Đóng';
+  closeLink.addEventListener('click', closeFullscreen);
+  fsControls.appendChild(doneBtn);
+  fsControls.appendChild(closeLink);
+}
+
+function goTransition(){
+  state.phase = 'transition';
+  recordingStatus.className = 'recording-status';
+  fsPhase.textContent = '';
+  fsPhase.className = 'fs-phase hidden';
+  fwRow.style.display = 'none';
+  fsProg.classList.add('hidden');
+  fsSegArc.classList.remove('show');
+  fsNum.textContent = fmt(state.speechMin*60);
+  fsCaption.textContent = 'Đã tìm hiểu xong.';
+  fsSubcaption.textContent = `Tiếp theo: ${state.speechMin} phút để nói.`;
+  fsSubcaption.classList.add('show');
+  fsControls.innerHTML = '';
+  const readyBtn = document.createElement('button');
+  readyBtn.className = 'btn btn-primary';
+  readyBtn.textContent = 'Tôi sẵn sàng nói';
+  readyBtn.addEventListener('click', startSpeech);
+  const closeLink = document.createElement('button');
+  closeLink.className = 'fs-link';
+  closeLink.textContent = 'Đóng';
+  closeLink.addEventListener('click', closeFullscreen);
+  fsControls.appendChild(readyBtn);
+  fsControls.appendChild(closeLink);
+}
+
+function setRecordingStatus(text, status = 'recording'){
+  recordingText.textContent = text;
+  recordingStatus.className = `recording-status show${status === 'recording' ? '' : ` ${status}`}`;
+}
+
+function preferredRecordingMimeType(){
+  if(!window.MediaRecorder || !MediaRecorder.isTypeSupported) return '';
+  return [
+    'audio/webm;codecs=opus',
+    'audio/ogg;codecs=opus',
+    'audio/mp4',
+    'audio/webm',
+  ].find(type=> MediaRecorder.isTypeSupported(type)) || '';
+}
+
+function releaseMediaStream(){
+  if(state.mediaStream){
+    state.mediaStream.getTracks().forEach(track=> track.stop());
+  }
+  state.mediaStream = null;
+}
+
+async function startRecording(){
+  if(!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder){
+    throw new Error('Trình duyệt này không hỗ trợ ghi âm.');
+  }
+
+  if(state.mediaRecorder) await stopRecording();
+  const stream = await navigator.mediaDevices.getUserMedia({
+    audio: {
+      echoCancellation: true,
+      noiseSuppression: true,
+      autoGainControl: true,
+    },
+  });
+  const preferredMimeType = preferredRecordingMimeType();
+  state.mediaStream = stream;
+  let recorder;
+  try{
+    recorder = preferredMimeType
+      ? new MediaRecorder(stream, {mimeType: preferredMimeType})
+      : new MediaRecorder(stream);
+  }catch(error){
+    releaseMediaStream();
+    throw error;
+  }
+
+  state.mediaRecorder = recorder;
+  state.recordingMimeType = recorder.mimeType || preferredMimeType || 'audio/webm';
+  state.audioChunks = [];
+  recorder.addEventListener('dataavailable', (event)=>{
+    if(event.data?.size) state.audioChunks.push(event.data);
+  });
+  recorder.start(500);
+}
+
+function stopRecording(){
+  if(state.recordingStopPromise) return state.recordingStopPromise;
+  const recorder = state.mediaRecorder;
+  if(!recorder){
+    releaseMediaStream();
+    return Promise.resolve(null);
+  }
+
+  const stopPromise = new Promise(resolve=>{
+    const finish = ()=>{
+      const blob = state.audioChunks.length
+        ? new Blob(state.audioChunks, {type:state.recordingMimeType || recorder.mimeType || 'audio/webm'})
+        : null;
+      state.mediaRecorder = null;
+      state.audioChunks = [];
+      releaseMediaStream();
+      resolve(blob);
+    };
+
+    if(recorder.state === 'inactive'){
+      finish();
+      return;
+    }
+    recorder.addEventListener('stop', finish, {once:true});
+    recorder.stop();
+  });
+  state.recordingStopPromise = stopPromise;
+  return stopPromise.finally(()=>{
+    if(state.recordingStopPromise === stopPromise) state.recordingStopPromise = null;
+  });
+}
+
+async function requestSpeechFeedback(audioBlob){
+  const params = new URLSearchParams({
+    topic: state.current,
+    categoryId: state.currentCat.id,
+    duration: String(state.total || state.speechMin * 60),
+  });
+  const response = await fetch(`/api/speech-feedback?${params}`, {
+    method: 'POST',
+    headers: {'Content-Type': audioBlob.type || 'audio/webm'},
+    body: audioBlob,
+  });
+  const data = await response.json().catch(()=> ({}));
+  if(!response.ok) throw new Error(data.error || 'Không thể phân tích bài nói.');
+  return data.feedback;
+}
+
+function appendFeedbackList(container, items){
+  const list = document.createElement('ul');
+  list.className = 'feedback-list';
+  (items || []).forEach(text=>{
+    const item = document.createElement('li');
+    item.textContent = text;
+    list.appendChild(item);
+  });
+  container.appendChild(list);
+}
+
+function renderSpeechFeedback(feedback){
+  feedbackContent.innerHTML = '';
+  feedbackTopic.textContent = `${state.currentCat.icon} ${state.current}`;
+
+  const hero = document.createElement('div');
+  hero.className = 'feedback-hero';
+  const score = document.createElement('div');
+  score.className = 'feedback-score';
+  const scoreValue = document.createElement('strong');
+  scoreValue.textContent = String(feedback.overallScore ?? 0);
+  const scoreUnit = document.createElement('span');
+  scoreUnit.textContent = '/ 100';
+  score.append(scoreValue, scoreUnit);
+  const summary = document.createElement('p');
+  summary.className = 'feedback-summary';
+  summary.textContent = feedback.summary || 'Gemini chưa nhận xét được bài nói này.';
+  hero.append(score, summary);
+  feedbackContent.appendChild(hero);
+
+  if(feedback.speechDetected !== false){
+    const scoreGrid = document.createElement('div');
+    scoreGrid.className = 'score-grid';
+    const scoreLabels = [
+      ['Rõ ràng', feedback.scores?.clarity],
+      ['Cấu trúc', feedback.scores?.structure],
+      ['Lập luận', feedback.scores?.reasoning],
+      ['Truyền đạt', feedback.scores?.delivery],
+    ];
+    scoreLabels.forEach(([label, value])=>{
+      const item = document.createElement('div');
+      item.className = 'score-item';
+      const name = document.createElement('span');
+      name.textContent = label;
+      const number = document.createElement('strong');
+      number.textContent = String(value ?? 0);
+      item.append(name, number);
+      scoreGrid.appendChild(item);
+    });
+    feedbackContent.appendChild(scoreGrid);
+  }
+
+  const argumentSection = document.createElement('section');
+  argumentSection.className = 'feedback-section';
+  const argumentTitle = document.createElement('h3');
+  argumentTitle.textContent = 'Chuỗi lập luận Gemini nghe được';
+  const argumentSummary = document.createElement('div');
+  argumentSummary.className = 'argument-summary';
+  argumentSummary.textContent = feedback.argumentSummary || 'Chưa xác định được chuỗi lập luận rõ ràng.';
+  argumentSection.append(argumentTitle, argumentSummary);
+  feedbackContent.appendChild(argumentSection);
+
+  const strengths = document.createElement('section');
+  strengths.className = 'feedback-section';
+  const strengthsTitle = document.createElement('h3');
+  strengthsTitle.textContent = 'Điểm làm tốt';
+  strengths.appendChild(strengthsTitle);
+  appendFeedbackList(strengths, feedback.strengths);
+  feedbackContent.appendChild(strengths);
+
+  const improvements = document.createElement('section');
+  improvements.className = 'feedback-section';
+  const improvementsTitle = document.createElement('h3');
+  improvementsTitle.textContent = 'Điểm cần cải thiện';
+  improvements.appendChild(improvementsTitle);
+  (feedback.improvements || []).forEach(improvement=>{
+    const card = document.createElement('div');
+    card.className = 'improvement-card';
+    const area = document.createElement('strong');
+    area.textContent = improvement.area;
+    const observation = document.createElement('p');
+    observation.textContent = improvement.observation;
+    const action = document.createElement('p');
+    action.className = 'action';
+    action.textContent = `Luyện ngay: ${improvement.action}`;
+    card.append(area, observation, action);
+    improvements.appendChild(card);
+  });
+  feedbackContent.appendChild(improvements);
+
+  const logicSection = document.createElement('section');
+  logicSection.className = 'feedback-section';
+  const logicTitle = document.createElement('h3');
+  logicTitle.textContent = 'Lỗi logic · reviewer khó tính';
+  logicSection.appendChild(logicTitle);
+  if((feedback.logicIssues || []).length===0){
+    const empty = document.createElement('p');
+    empty.className = 'feedback-summary';
+    empty.textContent = 'Không phát hiện lỗi logic rõ ràng trong phần audio nghe được.';
+    logicSection.appendChild(empty);
+  }
+  (feedback.logicIssues || []).forEach(issue=>{
+    const card = document.createElement('div');
+    card.className = 'logic-card';
+    const type = document.createElement('span');
+    type.className = 'issue-type';
+    type.textContent = issue.issueType;
+    const excerpt = document.createElement('p');
+    excerpt.className = 'issue-excerpt';
+    excerpt.textContent = `“${issue.excerpt}”`;
+    const critique = document.createElement('p');
+    critique.className = 'issue-detail';
+    critique.textContent = `Vì sao yếu: ${issue.critique}`;
+    const fix = document.createElement('p');
+    fix.className = 'issue-fix';
+    fix.textContent = `Sửa: ${issue.fix}`;
+    card.append(type, excerpt, critique, fix);
+    logicSection.appendChild(card);
+  });
+  feedbackContent.appendChild(logicSection);
+
+  if((feedback.factualIssues || []).length){
+    const factualSection = document.createElement('section');
+    factualSection.className = 'feedback-section';
+    const factualTitle = document.createElement('h3');
+    factualTitle.textContent = 'Thông tin sai hoặc cần kiểm chứng';
+    factualSection.appendChild(factualTitle);
+    feedback.factualIssues.forEach(issue=>{
+      const card = document.createElement('div');
+      card.className = 'factual-card';
+      const type = document.createElement('span');
+      type.className = 'issue-type';
+      type.textContent = 'Kiểm chứng';
+      const excerpt = document.createElement('p');
+      excerpt.className = 'issue-excerpt';
+      excerpt.textContent = `“${issue.excerpt}”`;
+      const concern = document.createElement('p');
+      concern.className = 'issue-detail';
+      concern.textContent = issue.concern;
+      const correction = document.createElement('p');
+      correction.className = 'issue-fix';
+      correction.textContent = `Sửa/diễn đạt an toàn hơn: ${issue.correction}`;
+      const verification = document.createElement('p');
+      verification.className = 'issue-detail';
+      verification.textContent = `Cần kiểm tra: ${issue.verification}`;
+      card.append(type, excerpt, concern, correction, verification);
+      factualSection.appendChild(card);
+    });
+    feedbackContent.appendChild(factualSection);
+  }
+
+  const questionsSection = document.createElement('section');
+  questionsSection.className = 'feedback-section';
+  const questionsTitle = document.createElement('h3');
+  questionsTitle.textContent = 'Ba câu hỏi phản biện khó';
+  questionsSection.appendChild(questionsTitle);
+  appendFeedbackList(questionsSection, feedback.toughQuestions);
+  feedbackContent.appendChild(questionsSection);
+
+  const revisedSection = document.createElement('section');
+  revisedSection.className = 'feedback-section';
+  const revisedTitle = document.createElement('h3');
+  revisedTitle.textContent = 'Lập luận lại cho chặt chẽ hơn';
+  const revisedArgument = document.createElement('div');
+  revisedArgument.className = 'revised-argument';
+  revisedArgument.textContent = feedback.revisedArgument || 'Chưa đủ nội dung để viết lại lập luận.';
+  revisedSection.append(revisedTitle, revisedArgument);
+  feedbackContent.appendChild(revisedSection);
+
+  const nextSection = document.createElement('section');
+  nextSection.className = 'feedback-section';
+  const nextTitle = document.createElement('h3');
+  nextTitle.textContent = 'Bài tập tiếp theo';
+  const nextPractice = document.createElement('div');
+  nextPractice.className = 'next-practice';
+  nextPractice.textContent = feedback.nextPractice || 'Thử nói lại cùng chủ đề với cấu trúc mở bài, hai luận điểm và kết luận.';
+  nextSection.append(nextTitle, nextPractice);
+  feedbackContent.appendChild(nextSection);
+  feedbackOverlay.classList.add('show');
+}
+
+function showFeedbackError(message){
+  feedbackTopic.textContent = state.currentCat ? `${state.currentCat.icon} ${state.current}` : '';
+  feedbackContent.innerHTML = '';
+  const error = document.createElement('div');
+  error.className = 'hint-error';
+  error.textContent = message;
+  feedbackContent.appendChild(error);
+  feedbackOverlay.classList.add('show');
+}
+
+function closeFeedback(){
+  feedbackOverlay.classList.remove('show');
+}
+
+feedbackClose.addEventListener('click', closeFeedback);
+feedbackOverlay.addEventListener('click', (event)=>{ if(event.target===feedbackOverlay) closeFeedback(); });
+
+function hideFullscreen(){
+  fsOverlay.classList.remove('show');
+  fsProg.classList.remove('hidden');
+  fsSegArc.classList.remove('show');
+  fsSubcaption.classList.remove('show');
+  recordingStatus.className = 'recording-status';
+}
+
+async function finishSpeechAnalysis(sessionId){
+  if(state.feedbackPending) return;
+  state.feedbackPending = true;
+  setRecordingStatus('Gemini đang nghe lại bài nói…', 'analyzing');
+  fsCaption.textContent = 'Đang phân tích.';
+  fsSubcaption.textContent = 'Đang tìm điểm mạnh và điểm cần cải thiện.';
+  fsSubcaption.classList.add('show');
+
+  try{
+    const audioBlob = await stopRecording();
+    if(sessionId !== state.speechSessionId) return;
+    if(!audioBlob || audioBlob.size < 1000){
+      throw new Error('Không có bản ghi đủ dài để Gemini nhận xét.');
+    }
+    const feedback = await requestSpeechFeedback(audioBlob);
+    if(sessionId !== state.speechSessionId) return;
+    hideFullscreen();
+    renderSpeechFeedback(feedback);
+  }catch(error){
+    if(sessionId !== state.speechSessionId) return;
+    hideFullscreen();
+    showFeedbackError(error.message);
+  }finally{
+    state.feedbackPending = false;
+  }
+}
+
+async function startSpeech(){
+  const sessionId = ++state.speechSessionId;
+  state.phase = 'speak';
+  state.total = state.speechMin*60;
+  state.remaining = state.total;
+  fsSubcaption.classList.remove('show');
+  fsTopic.textContent = state.currentCat.icon + '  ' + state.current;
+  fsPhase.textContent = '';
+  fsPhase.className = 'fs-phase hidden';
+  fwRow.style.display = 'flex';
+  fsProg.classList.add('hidden');
+  fsSegArc.classList.add('show');
+  fsCaption.textContent = 'Đang bật micro…';
+  fsControls.innerHTML = '';
+  const closeLink = document.createElement('button');
+  closeLink.className = 'fs-link';
+  closeLink.textContent = 'Đóng';
+  closeLink.addEventListener('click', closeFullscreen);
+  fsControls.appendChild(closeLink);
+  clearTimer();
+  fsOverlay.classList.add('show');
+  setRecordingStatus('Đang xin quyền micro…', 'analyzing');
+
+  try{
+    await startRecording();
+    if(sessionId !== state.speechSessionId){
+      await stopRecording();
+      return;
+    }
+    setRecordingStatus('Đang ghi âm · sẽ gửi Gemini khi hết giờ');
+  }catch(error){
+    setRecordingStatus('Không có micro · sẽ không có nhận xét', 'error');
+    fsSubcaption.textContent = error.name === 'NotAllowedError'
+      ? 'Bạn chưa cho phép trình duyệt sử dụng micro.'
+      : error.message;
+    fsSubcaption.classList.add('show');
+  }
+
+  if(sessionId !== state.speechSessionId) return;
+  fsCaption.textContent = 'Nói.';
+  tickSpeech();
+  state.timerId = setInterval(tickSpeech, 1000);
+}
+function speakRingColor(remaining){
+  if(remaining > 5) return '#DE8C52';
+  const t = Math.min(1, Math.max(0, (5 - remaining) / 5));
+  const r = Math.round(222 + (229-222)*t);
+  const g = Math.round(140 + (57-140)*t);
+  const b = Math.round(82 + (53-82)*t);
+  return `rgb(${r},${g},${b})`;
+}
+function tickSpeech(){
+  const elapsedFrac = 1 - Math.max(state.remaining/state.total, 0);
+  fsNum.textContent = fmt(state.remaining);
+  const arcLen = Math.max(elapsedFrac, 0.004) * CIRC;
+  fsSegArc.style.strokeDasharray = `${arcLen} ${CIRC}`;
+  fsSegArc.style.transform = 'rotate(0deg)';
+  fsSegArc.style.stroke = speakRingColor(state.remaining);
+  const segIdx = Math.min(2, Math.floor(elapsedFrac*3));
+  fwRow.querySelectorAll('.fw-seg').forEach((el,i)=> el.classList.toggle('active', i===segIdx));
+  if(state.remaining<=3 && state.remaining>0) beep(880,0.08,0.1,'square');
+  if(state.remaining<=0){
+    clearTimer();
+    beep(520,0.35,0.12,'sine');
+    fsCaption.textContent = 'Hết giờ.';
+    finishSpeechAnalysis(state.speechSessionId);
+    return;
+  }
+  state.remaining--;
+}
+
+async function closeFullscreen(){
+  state.speechSessionId++;
+  clearTimer();
+  await stopRecording();
+  hideFullscreen();
+}
+
+startBtn.addEventListener('click', ()=>{
+  if(!state.current) return;
+  if(state.mode==='deep') startResearch();
+  else startSpeech();
+  if(state.mode!=='deep'){
+    fsTopic.textContent = state.currentCat.icon + '  ' + state.current;
+  }
+});
+fsExit.addEventListener('click', closeFullscreen);
+
+document.addEventListener('keydown', (e)=>{
+  if(feedbackOverlay.classList.contains('show')){
+    if(e.code==='Escape') closeFeedback();
+    return;
+  }
+  if(fsOverlay.classList.contains('show')){
+    if(e.code==='Escape') closeFullscreen();
+    return;
+  }
+  if(settingsOverlay.classList.contains('show')){
+    if(e.code==='Escape') settingsOverlay.classList.remove('show');
+    return;
+  }
+  if(hintOverlay.classList.contains('show')){
+    if(e.code==='Escape') closeHint();
+    return;
+  }
+  if(e.code==='Space' && document.activeElement.tagName!=='BUTTON' && document.activeElement.tagName!=='INPUT'){
+    e.preventDefault();
+    spinBtn.click();
+  } else if(e.code==='Enter'){
+    if(!startBtn.disabled) startBtn.click();
+  }
+});
+
+renderHistory();
+</script>
+</body>
+</html>
